@@ -42,7 +42,7 @@ const CURRENT_USER_ID = (
   })
 ).id;
 
-app.get("/posts", async (req, res) => {
+app.get("/api/posts", async (req, res) => {
   return await comitToDb(
     prisma.post.findMany({
       select: {
@@ -52,7 +52,7 @@ app.get("/posts", async (req, res) => {
     })
   );
 });
-app.get("/posts/:id", async (req, res) => {
+app.get("/api/posts/:id", async (req, res) => {
   return await comitToDb(
     prisma.post
       .findUnique({
@@ -93,7 +93,7 @@ app.get("/posts/:id", async (req, res) => {
   );
 });
 
-app.post("/posts/:id/comments", async (req, res) => {
+app.post("/api/posts/:id/comments", async (req, res) => {
   if (req.body.message === "" || req.body.message == null) {
     return res.send(app.httpErrors.badRequest("Message is required"));
   }
@@ -118,7 +118,7 @@ app.post("/posts/:id/comments", async (req, res) => {
   );
 });
 
-app.put("/posts/:postId/comments/:commentId", async (req, res) => {
+app.put("/api/posts/:postId/comments/:commentId", async (req, res) => {
   if (req.body.message === "" || req.body.message == null) {
     return res.send(app.httpErrors.badRequest("Message is required"));
   }
@@ -140,7 +140,7 @@ app.put("/posts/:postId/comments/:commentId", async (req, res) => {
   );
 });
 
-app.delete("/posts/:postId/comments/:commentId", async (req, res) => {
+app.delete("/api/posts/:postId/comments/:commentId", async (req, res) => {
   const { userId } = await prisma.comment.findUnique({
     where: { id: req.params.commentId },
     select: { userId: true },
@@ -158,26 +158,29 @@ app.delete("/posts/:postId/comments/:commentId", async (req, res) => {
   );
 });
 
-app.post("/posts/:postId/comments/:commentId/toggleLike", async (req, res) => {
-  const data = {
-    commentId: req.params.commentId,
-    userId: req.cookies.userId,
-  };
-  const like = await prisma.like.findUnique({
-    where: { userId_commentId: data },
-  });
-  if (like == null) {
-    return await comitToDb(prisma.like.create({ data })).then(() => {
-      return { addLike: true };
+app.post(
+  "/api/posts/:postId/comments/:commentId/toggleLike",
+  async (req, res) => {
+    const data = {
+      commentId: req.params.commentId,
+      userId: req.cookies.userId,
+    };
+    const like = await prisma.like.findUnique({
+      where: { userId_commentId: data },
     });
-  } else {
-    return await comitToDb(
-      prisma.like.delete({ where: { userId_commentId: data } })
-    ).then(() => {
-      return { addLike: false };
-    });
+    if (like == null) {
+      return await comitToDb(prisma.like.create({ data })).then(() => {
+        return { addLike: true };
+      });
+    } else {
+      return await comitToDb(
+        prisma.like.delete({ where: { userId_commentId: data } })
+      ).then(() => {
+        return { addLike: false };
+      });
+    }
   }
-});
+);
 
 async function comitToDb(promise) {
   const [error, data] = await app.to(promise);
@@ -185,7 +188,7 @@ async function comitToDb(promise) {
   return data;
 }
 
-app.listen({ port: process.env.PORT }, (err, address) => {
+app.listen({ port: process.env.PORT || 8000 }, (err, address) => {
   if (err) throw err;
   // Server is now listening on ${address}
 });
