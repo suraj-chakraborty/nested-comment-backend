@@ -23,6 +23,7 @@
     "@fastify/sensible": "^5.1.1",
     "@prisma/client": "^4.3.1",
     "dotenv": "^16.0.2",
-    "fastify": "^4.5.3"
+    "fastify": "^4.5.3",
+    "postgresql": "0.0.1"
   }
 }

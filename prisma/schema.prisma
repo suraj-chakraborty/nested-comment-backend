@@ -5,15 +5,15 @@ generator client {
   provider = "prisma-client-js"
 }
 
-datasource db {
-  provider = "mongodb"
-  url      = env("DATABASE_URL")
-}
-
 // datasource db {
-//   provider = "postgres"
+//   provider = "mongodb"
 //   url      = env("DATABASE_URL")
 // }
+
+datasource db {
+  provider = "postgres"
+  url      = env("DATABASE_URL")
+}
 
 model Post {
   id       String    @id @default(uuid()) @map("_id")
@@ -45,16 +45,16 @@ model Comment {
 }
 
 model Likes {
-  id        Ids     @id @map("_id")
+  // id        Ids     @id @map("_id")
   user      User    @relation(fields: [userId], references: [id], onDelete: Cascade)
   comment   Comment @relation(fields: [commentId], references: [id], onDelete: Cascade)
   userId    String
   commentId String
 
-  // @@id([userId, commentId])
+  @@id([userId, commentId])
 }
 
-type Ids {
-  userId    String
-  commentId String
-}
+// type Ids {
+//   userId    String
+//   commentId String
+// }
