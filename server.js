@@ -12,6 +12,7 @@ app.register(cookie, { secret: process.env.Cookie_Secret });
 app.register(cors, {
   origin: process.env.CLIENT_URL,
   credentials: true,
+  optionSuccessStatus: 200,
 });
 app.addHook("onRequest", (req, res, done) => {
   if (req.cookies.userId !== CURRENT_USER_ID) {
@@ -185,15 +186,10 @@ async function comitToDb(promise) {
   return data;
 }
 
-app.listen(
-  { port: process.env.PORT || 5000, access: "0.0.0.0" },
-  (err, PORT, access) => {
-    if (err) {
-      console.log(err.message);
-    } else {
-      console.log(
-        `Server is now listening on ${PORT}you can access from ${access}`
-      );
-    }
+app.listen({ port: process.env.PORT || 5000 }, (err, PORT) => {
+  if (err) {
+    console.log(err.message);
+  } else {
+    console.log(`Server is now listening on ${PORT}`);
   }
-);
+});
