@@ -192,6 +192,6 @@ app.listen({ port: process.env.PORT }, (err, PORT) => {
   if (err) {
     console.log(err.message);
   } else {
-    console.log(`Server is now listening on ${PORT}`);
+    console.log(`Server is listening on ${PORT}`);
   }
 });
