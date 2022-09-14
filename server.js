@@ -6,15 +6,10 @@ import { PrismaClient } from "@prisma/client";
 import cookie from "@fastify/cookie";
 dotenv.config();
 
-const app = fastify();
+const app = fastify({ logger: true });
 app.register(sensible);
 app.register(cookie, { secret: process.env.Cookie_Secret });
-app.register(cors, {
-  origin: process.env.CLIENT_URL,
-  credentials: true,
-  optionSuccessStatus: 200,
-  allowedHeaders: Access - Control - Allow - Origin,
-});
+app.register(cors, {});
 app.addHook("onRequest", (req, res, done) => {
   if (req.cookies.userId !== CURRENT_USER_ID) {
     req.cookies.userId = CURRENT_USER_ID;
