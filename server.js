@@ -192,7 +192,7 @@ app.listen(
       console.log(err.message);
     } else {
       console.log(
-        `Server is now listening on ${PORT}you can access from {access}`
+        `Server is now listening on ${PORT}you can access from ${access}`
       );
     }
   }
