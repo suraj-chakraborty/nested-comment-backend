@@ -186,7 +186,7 @@ async function comitToDb(promise) {
 }
 
 app.listen(
-  { port: process.env.PORT || 5000, access: "0,0,0,0" },
+  { port: process.env.PORT || 5000, access: "0.0.0.0" },
   (err, PORT, access) => {
     if (err) {
       console.log(err.message);
