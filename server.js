@@ -186,10 +186,11 @@ async function comitToDb(promise) {
   return data;
 }
 
-app.listen({ port: process.env.PORT || 5000 }, (err, PORT) => {
+var port = process.env.PORT || 8080;
+app.listen({ port }, (err, port) => {
   if (err) {
     console.log(err.message);
   } else {
-    console.log(`Server is now listening on ${PORT}`);
+    console.log(`Server is now listening on ${port}`);
   }
 });
