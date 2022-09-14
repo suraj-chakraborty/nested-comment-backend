@@ -13,6 +13,7 @@ app.register(cors, {
   origin: process.env.CLIENT_URL,
   credentials: true,
   optionSuccessStatus: 200,
+  allowedHeaders: Access - Control - Allow - Origin,
 });
 app.addHook("onRequest", (req, res, done) => {
   if (req.cookies.userId !== CURRENT_USER_ID) {
