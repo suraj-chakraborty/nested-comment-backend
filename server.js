@@ -191,6 +191,10 @@ async function comitToDb(promise) {
   return data;
 }
 
+if (process.env.NODE_ENV == "Production") {
+  app.use(express.static("client/build"));
+}
+
 var port = process.env.PORT || 8080;
 app.listen({ port }, (err, port) => {
   if (err) {
