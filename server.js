@@ -191,14 +191,14 @@ async function comitToDb(promise) {
   return data;
 }
 
-app.use(express.static(path.join(__dirname, "/client/build")));
+app.use(fastify.static(path.join(__dirname, "/client/build")));
 
 app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname, "/client/build", "index.html"));
 });
 
 if (process.env.NODE_ENV == "Production") {
-  app.use(express.static("client/build"));
+  app.use(fastify.static("client/build"));
   console.log("Production");
 }
 
