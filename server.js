@@ -48,7 +48,7 @@ const CURRENT_USER_ID = (
   })
 ).id;
 
-app.get("/posts", async (req, res) => {
+app.post("/", async (req, res) => {
   return res.data("server is running");
 });
 
