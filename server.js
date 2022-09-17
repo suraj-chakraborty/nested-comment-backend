@@ -4,7 +4,7 @@ import cors from "@fastify/cors";
 import dotenv from "dotenv";
 import { PrismaClient } from "@prisma/client";
 import cookie from "@fastify/cookie";
-const path = require("path");
+import path from "path";
 import serveStatic from "@fastify/static";
 dotenv.config();
 
