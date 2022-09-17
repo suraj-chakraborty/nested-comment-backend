@@ -4,20 +4,15 @@ import cors from "@fastify/cors";
 import dotenv from "dotenv";
 import { PrismaClient } from "@prisma/client";
 import cookie from "@fastify/cookie";
+const path = require("path");
+import serveStatic from "@fastify/static";
 dotenv.config();
 
 const app = fastify({ logger: true });
 app.register(sensible);
 app.register(cookie, { secret: process.env.Cookie_Secret });
 app.register(cors, {
-  origin: "https://nested-comment-bar.vercel.app/",
-  allowedHeaders: [
-    "Origin",
-    "X-Requested-With",
-    "Accept",
-    "Content-Type",
-    "Authorization",
-  ],
+  origin: "*",
 });
 app.addHook("onRequest", (req, res, done) => {
   if (req.cookies.userId !== CURRENT_USER_ID) {
@@ -195,7 +190,7 @@ async function comitToDb(promise) {
   return data;
 }
 
-app.use(fastify.static(path.join(__dirname, "/client/build")));
+app.register(serveStatic(path.join(__dirname, "/client/build")));
 
 app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname, "/client/build", "index.html"));
