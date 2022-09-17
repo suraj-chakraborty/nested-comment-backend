@@ -49,6 +49,10 @@ const CURRENT_USER_ID = (
 ).id;
 
 app.get("/posts", async (req, res) => {
+  return res.data("server is running");
+});
+
+app.get("/posts", async (req, res) => {
   return await comitToDb(
     prisma.post.findMany({
       select: {
@@ -196,11 +200,6 @@ app.use(fastify.static(path.join(__dirname, "/client/build")));
 app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname, "/client/build", "index.html"));
 });
-
-if (process.env.NODE_ENV == "Production") {
-  app.use(fastify.static("client/build"));
-  console.log("Production");
-}
 
 var port = process.env.PORT || 8080;
 app.listen({ port }, (err, port) => {
