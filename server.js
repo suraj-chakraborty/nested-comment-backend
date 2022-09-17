@@ -6,10 +6,7 @@ import { PrismaClient } from "@prisma/client";
 import cookie from "@fastify/cookie";
 import path from "path";
 import serveStatic from "@fastify/static";
-import { fileURLToPath } from "url";
-const __filename = fileURLToPath(import.meta.url);
 
-const __dirname = path.dirname(__filename);
 dotenv.config();
 
 const app = fastify({ logger: true });
@@ -194,10 +191,10 @@ async function comitToDb(promise) {
   return data;
 }
 
-app.register(serveStatic(path.join(__dirname, "/client/build")));
+app.register(serveStatic(path.join("/client/build")));
 
 app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname, "/client/build", "index.html"));
+  res.sendFile(path.join("/client/build", "index.html"));
 });
 
 var port = process.env.PORT || 8080;
