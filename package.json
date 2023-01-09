@@ -4,7 +4,7 @@
   "description": "it is a demo of how nested comment works",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon server.js"
+    "start": "npm install && npx prisma db push && npx prisma db seed && node server.js"
   },
   "keywords": [],
   "author": "",
