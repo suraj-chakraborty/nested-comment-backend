@@ -10,13 +10,8 @@ const app = fastify();
 app.register(sensible);
 app.register(cookie, { secret: process.env.Cookie_Secret });
 app.register(cors, {
-  headers: {
-    "Access-Control-Allow-Origin": process.env.CLIENT_URL,
-    "Access-Control-Allow-Methods": "GET,HEAD,OPTIONS,POST,PUT",
-    "Access-Control-Allow-Headers":
-      "Origin, Accept, X-Requested-With, Content-Type, " +
-      "Access-Control-Request-Method, Access-Control-Request-Headers, Authorization",
-  },
+  origin: process.env.CLIENT_URL,
+  credentials: true,
 });
 app.addHook("onRequest", (req, res, done) => {
   if (req.cookies.userId !== CURRENT_USER_ID) {
