@@ -13,7 +13,9 @@ app.register(cors, {
   headers: {
     "Access-Control-Allow-Origin": process.env.CLIENT_URL,
     "Access-Control-Allow-Methods": "GET,HEAD,OPTIONS,POST,PUT",
-    "Access-Control-Allow-Headers": "Origin, Content-Type, X-Auth-Token",
+    "Access-Control-Allow-Headers":
+      "Origin, Accept, X-Requested-With, Content-Type, " +
+      "Access-Control-Request-Method, Access-Control-Request-Headers, Authorization",
   },
 });
 app.addHook("onRequest", (req, res, done) => {
