@@ -11,10 +11,9 @@ app.register(sensible);
 app.register(cookie, { secret: process.env.Cookie_Secret });
 app.register(cors, {
   headers: {
-    "Access-Control-Allow-Origin": "*",
-    "Access-Control-Allow-Methods": "*",
-    "Access-Control-Allow-Headers":
-      "'Access-Control-Allow-Headers: Origin, Content-Type, X-Auth-Token'",
+    "Access-Control-Allow-Origin": process.env.CLIENT_URL,
+    "Access-Control-Allow-Methods": "GET,HEAD,OPTIONS,POST,PUT",
+    "Access-Control-Allow-Headers": "Origin, Content-Type, X-Auth-Token",
   },
 });
 app.addHook("onRequest", (req, res, done) => {
